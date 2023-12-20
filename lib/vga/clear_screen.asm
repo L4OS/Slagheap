@@ -1,5 +1,5 @@
-; Функция очисткии экрана
-; Вход: ничего. 
+; Р¤СѓРЅРєС†РёСЏ РѕС‡РёСЃС‚РєРёРё СЌРєСЂР°РЅР°
+; Р’С…РѕРґ: РЅРёС‡РµРіРѕ. 
 ;
 function	_tmp
 	load	r14, 0x2000 ; set stack
@@ -21,8 +21,8 @@ rows2:
 	inc	video_ptr, 4
 	dec	counter
 	jnz	rows2
-	load	video_ptr, 0xfffeffe0	; порт обновление экрана
+	load	video_ptr, 0xfffeffe0	; РїРѕСЂС‚ РѕР±РЅРѕРІР»РµРЅРёСЏ СЌРєСЂР°РЅР°
 	mov	(video_ptr), eax
-	return			; Возврат из функции
+	return			; Р’РѕР·РІСЂР°С‚ РёР· С„СѓРЅРєС†РёРё
 end
 
