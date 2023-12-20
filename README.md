@@ -1,7 +1,4 @@
-# stash
-Selection of some interesting examples for the Everest processor
-
-### Slagheap SoC
+# Slagheap SoC
 
 В этом репозитории вы найдёте библиотеки, тесты и примеры програм для компьютера "Террикон", также известного как Slagheap SoC. Изначально "компьютер" был реализован на плате ["Марсоход"](https://marsohod.org/). Slagheap SOC был достаточно простым компьютером, он не задействовал микросхему DRAM и общался с внешним миром через UART порт. 
 
