@@ -1,7 +1,7 @@
 $sysramsize	equ	70		; Words count
 $sysramptr	equ	0x1000          ; Syten RAM address
 
-; ------ Именование регистров ------
+; ------ РРјРµРЅРѕРІР°РЅРёРµ СЂРµРіРёСЃС‚СЂРѕРІ ------
 assign		r0	zero	; 
 assign		r1	counter 
 assign		r2 	pointer
@@ -25,7 +25,7 @@ vd_not_prev_key:
 	cmp	r0,  0x71 ; 'q'
 	je      visual_dump_quit
 	cmp	r0,  0x61; 'a'
-	jne	visuail_dump_wait	; Клавиша 1
+	jne	visuail_dump_wait	; РљР»Р°РІРёС€Р° 1
 	lea	r1, $address_str
 	call	_puts
 	call	input_hex
@@ -81,9 +81,9 @@ end
 done
 
 function   show_hex_dump
-	dec	r14, 12		; Освобождение места на стеке для локальных переменных
-	dec	r14, 12		; Освобождение места на стеке для локальных переменных
-	mov	(r14), r15	; Адрес возврата из функции
+	dec	r14, 12		; РћСЃРІРѕР±РѕР¶РґРµРЅРёРµ РјРµСЃС‚Р° РЅР° СЃС‚РµРєРµ РґР»СЏ Р»РѕРєР°Р»СЊРЅС‹С… РїРµСЂРµРјРµРЅРЅС‹С…
+	dec	r14, 12		; РћСЃРІРѕР±РѕР¶РґРµРЅРёРµ РјРµСЃС‚Р° РЅР° СЃС‚РµРєРµ РґР»СЏ Р»РѕРєР°Р»СЊРЅС‹С… РїРµСЂРµРјРµРЅРЅС‹С…
+	mov	(r14), r15	; РђРґСЂРµСЃ РІРѕР·РІСЂР°С‚Р° РёР· С„СѓРЅРєС†РёРё
 
 	load	r13, 8
 print_line:
