@@ -91,7 +91,7 @@ $backspace_str		db	0x1b,'[1D ',0x1b, '[1D', 0
 ; --- Функция печати шестнадцатеричного числа
 ; Вход: R0 - число для печати в шестнадцатеричном виде
 function	_print_hex
-	mov	R12, R15	; Сохранение адреса возврата в R12
+	push		R15
 	load		R3, 0x20
 	call		_putchar
 	load		R7, 0x9
@@ -117,7 +117,7 @@ alphachar:
 finish:
 	load		R3, 0x20
 	call		_putchar
-	mov	R15, R12	; Восстановление адреса возврата из R12
+	pop		R15
 	return
 end
 

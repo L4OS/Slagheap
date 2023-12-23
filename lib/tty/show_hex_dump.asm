@@ -130,7 +130,7 @@ $shd_crlf	db	13,10,0
 enable
  include		../lib/tty/input_hex.asm
 else
- include		../lib/tty.asm
+ include		../lib/tty/tty.asm
  include		../lib/input_hex.asm
 done
                         	

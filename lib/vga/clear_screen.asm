@@ -26,3 +26,7 @@ rows2:
 	return			; Возврат из функции
 end
 
+function	_refresh_screen
+	load	video_ptr, 0xfffeffe0	; ïîðò îáíîâëåíèå ýêðàíà
+	mov	(video_ptr), eax
+end

@@ -90,6 +90,10 @@ skip_minutes:
 	lea	r1, $sec_fin_str
 	call	_puts
 
+	call	_get_step_counter
+	call	_print_dec
+	lea	r1, $step_count
+	call	_puts
 	mov	r15, (r14)
 	inc	r14, 12
 	inc	r14, 12
@@ -106,24 +110,13 @@ $hours_str	db	' hours ',0
 $min_str	db	' min ',0
 $sec_mid_str	db	' seconds = ',0
 $sec_fin_str	db	' sec',13,10,0
+$step_count	db	' instructions executed',13,10,0
 
 disable
 ;else
- include		../lib/tty.asm
- include		../lib/div.asm
- include		../lib/sysclock.asm
- include		../lib/print_dec.asm
+ include		../lib/tty/tty.asm
+ include		../lib/emulate/div.asm
+ include		../lib/emulate/sysclock.asm
+ include		../lib/emulate/step_counter.asm
+ include		../lib/tty/print_dec.asm
 done
-; --- Функция деления чисел (32/32) -----------------------
-;
-; Вход:
-;	R0  - делимое (младшие 32-бита)
-;	R1  - делимое (старшие 32-бита)
-;	R2  - делитель
-;
-; Выход:
-; 	R0 - частное
-; 	R2 - остаток
-; ---------------------------------------------------------
-; R4, R5 - lremainder
-; R6, R7 - divisor

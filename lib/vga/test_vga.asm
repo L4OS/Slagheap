@@ -1,5 +1,5 @@
 function	_init_vga
-	load	r14, 0x2000 ; set stack
+	load	r14, 0x8000 ; set stack
 	notch
 	jmp	entry
 entry:
@@ -26,13 +26,14 @@ help:
 	load	r1, 0x00100000	; Позиция на экране - старшие 16 бит номер строки, младшие - номер столбца
 	load	r2, 0xFFFFFFFF  ; Цвет пикселей
 	load	r3, 0x00000000  ; Цвет фона
-	call _draw_string
+	call 	_draw_string
 
 	lea	r0, $line2	; Адрес строки приветствия в R1
 	load	r1, 0x00110000	; Позиция на экране - старшие 16 бит номер строки, младшие - номер столбца
 	load	r2, 0xFFFFFFFF  ; Цвет пикселей
 	load	r3, 0x00000000  ; Цвет фона
-	call _draw_string
+	call 	_vga_puts
+;	call 	_draw_string
 
 loop:
 	load	r3, 0xfffeffe0	; Обновлене экрана пока не вынесено в функцию
@@ -135,7 +136,7 @@ end
 
 
 $line1 	db	'1 - clear vga screen  ',13,10  ,0 
-$line2	db	'2 - CYRTHIN-Nesterenko-8x16   ',13,10, 0
+$line2	db	'2 - CYRTHIN-Nesterenko-8x16   ',13,10,
 $line3	db	'3 - DK-Feoktistov-8x16',13,10
 	db	'4 - beta-Chi-Sovt-8x16',13,10
 	db	'5 - EDFN-Anry-VGA3-8x16   ',13,10
@@ -152,7 +153,8 @@ include		draw_string.asm
 include		get_key.asm
 include		scroll.asm
 
-include		../lib/tty.asm
+include		../tty/tty.asm
+include		../emulate/div.asm
 
 $dosfont1		import		fonts/CYRTHIN-Nesterenko-8x16.fnt 
 $dosfont2		import		fonts/DK-Feoktistov-8x16.fnt 

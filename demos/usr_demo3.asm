@@ -1,11 +1,12 @@
 ; Печатает коды нажатых клавиш на отладочной консоле
 
 ; --- Точка входа при отладке на "голом железе". Она должна быть первой в файле
-function _test_string
+function test_string
 	load	r14, 0x8000 ; set stack
 	notch
 	jmp	entry
 entry:
+end
 
 function   user_main
 	push	r15
