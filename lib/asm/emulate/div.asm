@@ -41,7 +41,6 @@ function	_div64
 	mov		r5, r0
 
 	xor		r8, r8		;	Quotient = 0
-
 loop:
 	clc
 	subc		r5, r7
@@ -84,5 +83,40 @@ skip:
 	mov		r2, r5
 	mov		r0, r8
 
+	return
+end
+
+; --- Поля Task Control Block ------------------------------
+$reg_1		equ		0	; 
+$reg_3		equ		1	; 
+$reg_4		equ		2	; 
+$reg_5		equ		3	; 
+$reg_6		equ		4	; 
+$reg_7		equ		5	; 
+$reg_8		equ		6	; 
+$reg_15		equ		7	; 
+
+assign		r14	stack_pointer	; Указатель на вершину стека
+
+function _safe_div64
+	dec	stack_pointer, 16
+	dec	stack_pointer, 16
+	mov	stack_pointer.reg_15, r15
+	mov	stack_pointer.reg_8, r8
+	mov	stack_pointer.reg_7, r7
+	mov	stack_pointer.reg_6, r6
+	mov	stack_pointer.reg_5, r5
+	mov	stack_pointer.reg_4, r4
+	mov	stack_pointer.reg_3, r3
+	call	_div64
+	mov	r3, stack_pointer.reg_3
+	mov	r4, stack_pointer.reg_4
+	mov	r5, stack_pointer.reg_5
+	mov	r6, stack_pointer.reg_6
+	mov	r7, stack_pointer.reg_7
+	mov	r8, stack_pointer.reg_8
+	mov	r15, stack_pointer.reg_15
+	inc	stack_pointer, 16
+	inc	stack_pointer, 16
 	return
 end

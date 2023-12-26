@@ -1,7 +1,7 @@
 ; Функция очистки экрана
 ; Вход: ничего. 
 ;
-function	_tmp
+function	lib_entry_test
 	load	r14, 0x2000 ; set stack
 	notch
 	jmp	entry
@@ -25,6 +25,7 @@ rows2:
 	mov	(video_ptr), eax
 	return			; Возврат из функции
 end
+
 
 function	_refresh_screen
 	load	video_ptr, 0xfffeffe0	; ïîðò îáíîâëåíèå ýêðàíà

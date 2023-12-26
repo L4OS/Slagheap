@@ -91,6 +91,8 @@ done:
 end
 
 include ../emulate/mul.asm
+include ../emulate/div.asm
+include draw_char.asm
 
 ; --- Функция вывода символа заданным цветом в видеопамять VGA адаптера
 ; Вход:  R0  - указатель на строку
@@ -204,23 +206,16 @@ end
 ; Выход:
 ;	R1 - адрес в видеопамяти 
 function caretreturn
-	return
 	push	r15
-	push 	r0
-	push 	r2
-	push 	r3
-	push 	r4
-	push 	r5
-	push 	r6
-	push 	r7
-	push 	r8
-debug
+;	return
+;debug
 	load	r0, 0x80000000 ; Начало видеопамяти
 	clc
 	subc	r1, r0
 	mov	r0, r1
+	load	r1, 0
 	load	r2, 40960
-	call 	_div
+	call 	_safe_div64
 	; В регистра R0 - номер текущей строки
 ;debug
 	load	r1, 40960
@@ -229,14 +224,6 @@ debug
 	clc
 	addc	r1, r2
 ; Тут надо сделать проверку на границу видеопамяти и если нужно сделать скроллинг. И возможно очистку до конца строки
-	pop	r8
-	pop	r7
-	pop	r6
-	pop	r5
-	pop	r3
-	pop	r2
-	pop	r2
-	pop	r0
 	pop	r15
 	return
 end

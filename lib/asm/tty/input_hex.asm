@@ -43,3 +43,5 @@ finish_hex_input:
 	pop	r15
 	return
 end
+
+include tty.asm

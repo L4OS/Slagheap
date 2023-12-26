@@ -42,4 +42,5 @@ pool:
 	return
 end
 
-
+include tty.asm
+include ../emulate/div.asm
