@@ -1,7 +1,8 @@
 function	init_vga
 	load	r14, 0x8000 ; set stack
 	notch
-	jmp	entry
+	call	test_vga
+	send
 entry:
 end
 
