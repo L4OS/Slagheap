@@ -84,9 +84,9 @@ end
 Для этого существует директива **include**.
 
 <pre>
-include		../lib/tty/tty.asm
-include		../lib/emulate/div.asm
-include		../lib/tty/print_dec.asm
+include		../lib/asm/tty/tty.asm
+include		../lib/asm/emulate/div.asm
+include		../lib/asm/tty/print_dec.asm
 </pre>
 
 ## Объявление констант и строк
