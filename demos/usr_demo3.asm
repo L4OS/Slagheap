@@ -32,9 +32,9 @@ loop:
 	return
 end
 
-include		../lib/tty/tty.asm
-include		../lib/emulate/div.asm
-include		../lib/tty/print_dec.asm
+include		../lib/asm/tty/tty.asm
+include		../lib/asm/emulate/div.asm
+include		../lib/asm/tty/print_dec.asm
 
 $hi_str		db	'Press Q to quit',13,10,0
 $dec_str	db	'Decimal ',0

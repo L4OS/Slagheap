@@ -1,7 +1,7 @@
 function	init_vga
 	load	r14, 0x8000 ; set stack
 	notch
-	call	test_vga
+	call	_test_vga
 	send
 entry:
 end
@@ -178,21 +178,21 @@ $line3	db	'3 - DK-Feoktistov-8x16',13,10
 	db	'0 - exit to prev menu',13,10,0
 
 ; VGA 640x480x32
-include		lib/vga/clear_screen.asm
-include		lib/vga/draw_char.asm
-include		lib/vga/draw_string.asm
-include		lib/vga/get_event.asm
-include		lib/vga/scroll.asm
+include		lib/asm/vga/clear_screen.asm
+include		lib/asm/vga/draw_char.asm
+include		lib/asm/vga/draw_string.asm
+include		lib/asm/vga/get_event.asm
+include		lib/asm/vga/scroll.asm
 
-include		lib/tty/tty.asm
-include		lib/emulate/div.asm
+include		lib/asm/tty/tty.asm
+include		lib/asm/emulate/div.asm
 
-$dosfont1		import		lib/vga/fonts/CYRTHIN-Nesterenko-8x16.fnt 
-$dosfont2		import		lib/vga/fonts/DK-Feoktistov-8x16.fnt 
-$dosfont3		import		lib/vga/fonts/beta-Chi-Sovt-8x16.fnt   
-$dosfont4		import		lib/vga/fonts/EDFN-Anry-VGA3-8x16.FNT  
-$dosfont5		import		lib/vga/fonts/MYFONT-8x16.FNT   
-$dosfont6		import		lib/vga/fonts/Goryachev-UNI_8X16.fnt    
+$dosfont1		import		lib/asm/vga/fonts/CYRTHIN-Nesterenko-8x16.fnt
+$dosfont2		import		lib/asm/vga/fonts/DK-Feoktistov-8x16.fnt
+$dosfont3		import		lib/asm/vga/fonts/beta-Chi-Sovt-8x16.fnt
+$dosfont4		import		lib/asm/vga/fonts/EDFN-Anry-VGA3-8x16.FNT
+$dosfont5		import		lib/asm/vga/fonts/MYFONT-8x16.FNT
+$dosfont6		import		lib/asm/vga/fonts/Goryachev-UNI_8X16.fnt
 
 function _test_chars
 	push	r15
