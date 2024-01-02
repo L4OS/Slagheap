@@ -6,7 +6,7 @@ assign		r3	pStrTwo		; Указатель на вторую строку
 assign		r4	FIRST_MASK
 assign		r5	SECOND_MASK
 assign		r6	MYFLAGS
-assing		r7	COUNTER
+assign		r7	COUNTER
 assign		r8	FOUR_COUNTER
 
 function debug_strncmp
@@ -40,7 +40,7 @@ $diff	  db 'diff',0
 ; Документация к posix strlen() гласит:
 ; Функции strcmp() и strncmp() возвращают целое число, которое меньше, больше нуля или равно ему, если строка s1 (или ее первые n байтов) 
 ; соответственно меньше, больше или равна (равны) s2.
-; !!! В текущей версии lib/asm им не следуюет  
+; !!! В текущей версии lib/asm им не следуюет  
 
 ; !!!! Просто напрашивается новая инструкция сдвиг через флаг нуля !!!!
 
