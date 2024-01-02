@@ -1,12 +1,12 @@
-; ------ РРјРµРЅРѕРІР°РЅРёРµ СЂРµРіРёСЃС‚СЂРѕРІ ------
+; ------ Именование регистров ------
 assign		r0	FirstWord
-assign		r1	pStrOne		; РЈРєР°Р·Р°С‚РµР»СЊ РЅР° РїРµСЂРІСѓСЋ СЃС‚СЂРѕРєСѓ
+assign		r1	pStrOne		; Указатель на первую строку
 assign		r2	SecondWord
-assign		r3	pStrTwo		; РЈРєР°Р·Р°С‚РµР»СЊ РЅР° РІС‚РѕСЂСѓСЋ СЃС‚СЂРѕРєСѓ
+assign		r3	pStrTwo		; Указатель на вторую строку
 assign		r4	FIRST_MASK
 assign		r5	SECOND_MASK
 assign		r6	MYFLAGS
-
+assign		r7	FOUR_COUNTER
 
 function debug_strcmp
 	load 	r14, 0x2000
@@ -28,19 +28,19 @@ $same	  db 'same',0
 $diff	  db 'diff',0
 
 include ../tty/tty.asm
-; Р¤СѓРЅРєС†РёСЏ СЃСЂР°РІРЅРµРЅРёСЏ СЃС‚СЂРѕРє
-; Р’С…РѕРґ: 
-;	R1 - Р°РґСЂРµСЃ РїРµСЂРІРѕР№ СЃС‚СЂРѕРєРё
-;	R3 - Р°РґСЂРµСЃ РІС‚РѕСЂРѕР№ СЃС‚СЂРѕРєРё
-; Р’С‹С…РѕРґ:
-;	РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ С„Р»Р°Рі РЅСѓР»СЏ (Z) РµСЃР»Рё СЃС‚СЂРѕРєРё СЃРѕРІРїР°РґР°СЋС‚
+; Функция сравнения строк
+; Вход: 
+;	R1 - адрес первой строки
+;	R2 - адрес второй строки
+; Выход:
+;	Устанавливает флаг нуля (Z) если строки совпадают
 ;
-; Р”РѕРєСѓРјРµРЅС‚Р°С†РёСЏ Рє posix strlen() РіР»Р°СЃРёС‚:
-; Р¤СѓРЅРєС†РёРё strcmp() Рё strncmp() РІРѕР·РІСЂР°С‰Р°СЋС‚ С†РµР»РѕРµ С‡РёСЃР»Рѕ, РєРѕС‚РѕСЂРѕРµ РјРµРЅСЊС€Рµ, Р±РѕР»СЊС€Рµ РЅСѓР»СЏ РёР»Рё СЂР°РІРЅРѕ РµРјСѓ, РµСЃР»Рё СЃС‚СЂРѕРєР° s1 (РёР»Рё РµРµ РїРµСЂРІС‹Рµ n Р±Р°Р№С‚РѕРІ) 
-; СЃРѕРѕС‚РІРµС‚СЃС‚РІРµРЅРЅРѕ РјРµРЅСЊС€Рµ, Р±РѕР»СЊС€Рµ РёР»Рё СЂР°РІРЅР° (СЂР°РІРЅС‹) s2.
-; !!! Р’ С‚РµРєСѓС‰РµР№ РІРµСЂСЃРёРё lib/asm РёРј РЅРµ СЃР»РµРґСѓСЋРµС‚  
+; Документация к posix strlen() гласит:
+; Функции strcmp() и strncmp() возвращают целое число, которое меньше, больше нуля или равно ему, если строка s1 (или ее первые n байтов) 
+; соответственно меньше, больше или равна (равны) s2.
+; !!! В текущей версии lib/asm им не следуюет  
 
-; !!!! РџСЂРѕСЃС‚Рѕ РЅР°РїСЂР°С€РёРІР°РµС‚СЃСЏ РЅРѕРІР°СЏ РёРЅСЃС‚СЂСѓРєС†РёСЏ СЃРґРІРёРі С‡РµСЂРµР· С„Р»Р°Рі РЅСѓР»СЏ !!!!
+; !!!! Просто напрашивается новая инструкция сдвиг через флаг нуля !!!!
 
 function strcmp
 ;debug
@@ -50,22 +50,22 @@ loop:
 	cmp	FirstWord, SecondWord
 	jne	look_carefully 
 
-	rol	FirstWord, 8		; Р¦РёРєР»РёС‡РµСЃРєРёР№ СЃРґРІРёРі РЅР° 8 Р±РёС‚ РІР»РµРІРѕ
+	rol	FirstWord, 8		; Циклический сдвиг на 8 бит влево
 	load	FIRST_MASK,  0xff
 	and	FIRST_MASK, FirstWord
 	je	same_string
 
-	rol	FirstWord, 8		; Р¦РёРєР»РёС‡РµСЃРєРёР№ СЃРґРІРёРі РЅР° 8 Р±РёС‚ РІР»РµРІРѕ
+	rol	FirstWord, 8		; Циклический сдвиг на 8 бит влево
 	load	FIRST_MASK,  0xff
 	and	FIRST_MASK, FirstWord
 	je	same_string
 
-	rol	FirstWord, 8		; Р¦РёРєР»РёС‡РµСЃРєРёР№ СЃРґРІРёРі РЅР° 8 Р±РёС‚ РІР»РµРІРѕ
+	rol	FirstWord, 8		; Циклический сдвиг на 8 бит влево
 	load	FIRST_MASK,  0xff
 	and	FIRST_MASK, FirstWord
 	je	same_string
 
-	rol	FirstWord, 8		; Р¦РёРєР»РёС‡РµСЃРєРёР№ СЃРґРІРёРі РЅР° 8 Р±РёС‚ РІР»РµРІРѕ
+	rol	FirstWord, 8		; Циклический сдвиг на 8 бит влево
 	load	FIRST_MASK,  0xff
 	and	FIRST_MASK, FirstWord
 	je	same_string
@@ -75,31 +75,38 @@ loop:
 	jmp	loop
 look_carefully:
 	load	MYFLAGS, 0
+	load	FOUR_COUNTER, 4
 do:
-	rol	FirstWord, 8		; Р¦РёРєР»РёС‡РµСЃРєРёР№ СЃРґРІРёРі РЅР° 8 Р±РёС‚ РІР»РµРІРѕ
+	rol	FirstWord, 8		; Циклический сдвиг на 8 бит влево
 	load	FIRST_MASK,  0xff	; 
 	and	FIRST_MASK, FirstWord
-	je	check_second
-; РЎСЋРґР° РїРѕРїР°Р»Рё РµСЃР»Рё С‚РµРєСѓС‰РёР№ Р±Р°Р№С‚ РїРµСЂРІРѕР№ СЃС‚СЂРѕРєРё РЅРµ РЅРѕР»СЊ
+	jz	check_second
+; Сюда попали если текущий байт первой строки не ноль
 	inc	MYFLAGS
 check_second:
-	rol	SecondWord, 8		; Р¦РёРєР»РёС‡РµСЃРєРёР№ СЃРґРІРёРі РЅР° 8 Р±РёС‚ РІР»РµРІРѕ
+	rol	SecondWord, 8		; Циклический сдвиг на 8 бит влево
 	load	SECOND_MASK,  0xff	; 
 	and	SECOND_MASK, SecondWord
-	je	check_zero
-; РЎСЋРґР° РїРѕРїР°Р»Рё РµСЃР»Рё С‚РµРєСѓС‰РёР№ Р±Р°Р№С‚ РІС‚РѕСЂРѕР№ СЃС‚СЂРѕРєРё РЅРµ РЅРѕР»СЊ
+	jz	check_zero
+; Сюда попали если текущий байт второй строки не ноль
 	inc	MYFLAGS
 check_zero:
 	or	MYFLAGS, MYFLAGS
-	je	same_string
-	cmp	FIRST_MASK, SECOND_MASK	
+	jz	same_string
+	cmp	FIRST_MASK, SECOND_MASK
+	jne	diff_string
+
+	dec	FOUR_COUNTER
+	jnz	do
+
+diff_string:
 same_string:
 	return
 end
 
 
-; C-style С„СѓРЅРєС†РёСЏ
-; РќСѓР¶РµРЅ РјРѕР·РіРѕРІРѕР№ С€С‚СѓСЂРј РґР»СЏ C-ABI - РїРµСЂРІС‹РїР°СЂР°РјРµС‚СЂ РІ R0 РёР»Рё R1?
+; C-style функция
+; Нужен мозговой штурм для C-ABI - первыпараметр в R0 или R1?
 function _strcmp
 	push	r15
 	call 	strcmp

@@ -21,13 +21,13 @@ rows2:
 	inc	video_ptr, 4
 	dec	counter
 	jnz	rows2
-	load	video_ptr, 0xfffeffe0	; порт обновления экрана
+	load	video_ptr, 0xfffeffe0	; Порт обновления экрана
 	mov	(video_ptr), eax
-	return			; Возврат из функции
+	return				; Возврат из функции
 end
 
 
 function	_refresh_screen
-	load	video_ptr, 0xfffeffe0	; ïîðò îáíîâëåíèå ýêðàíà
+	load	video_ptr, 0xfffeffe0	; Порт обновления экрана
 	mov	(video_ptr), eax
 end

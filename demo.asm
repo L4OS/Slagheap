@@ -1,6 +1,6 @@
 function	init_vga
 	load	r14, 0x8000 ; set stack
-	notch
+;debug
 	call	_test_vga
 	send
 entry:
@@ -31,8 +31,10 @@ help:
 
 	lea	r0, $line2	; Адрес строки приветствия в R1
 	load	r1, 0x00110000	; Позиция на экране - старшие 16 бит номер строки, младшие - номер столбца
-	load	r2, 0xFFFFFFFF  ; Цвет пикселей
-	load	r3, 0x00000000  ; Цвет фона
+;	load	r2, 0x00000000  ; Цвет фона
+;	load	r3, 0xFFFFFFFF  ; Цвет пикселей
+	load	r2, 0xff00ff00
+	load	r3, 0x552a552a
 	call 	_vga_puts
 ;	call 	_draw_string
 loop:
@@ -67,6 +69,7 @@ l1:
 	call	_print_hex
 
 	jmp	loop
+
 timeout:
 	jmp	loop
 exit:
@@ -135,14 +138,14 @@ lab7:
 	call	_test_chars
 	jmp	exit
 lab8:
-	cmp	r0, 0x38 ; key 8
+	cmp	r0, 0x61  ; 'a'   ; 0x38 ; key 8
 	jne	lab9
 	load 	r0, 16
 	call	_shift_screen_vertically
 	jmp	exit
 lab9:
 
-	cmp	r0, 0x39 ; 'key 9'
+	cmp	r0, 0x71 ; 'q'	; 0x39 ; 'key 9'
 	jne	lab10
 	load 	r0, -16
 	call	_shift_screen_vertically
@@ -150,30 +153,59 @@ lab9:
 lab10:
 	cmp	r0, 0x5b ; key [
 	jne	lab11
-	load 	r0, 8
-	call	_shift_screen_horizontally
-	jmp	exit
-lab11:
-
-	cmp	r0, 0x5d ; 'key ['
-	jne	lab12
 	load 	r0, -8
 	call	_shift_screen_horizontally
 	jmp	exit
-lab12:
+lab11:
+	cmp	r0, 0x5d ; 'key ]'
+	jne	lab12
+	load 	r0, 8
+	call	_shift_screen_horizontally
+	jmp	exit
+lab12:	cmp	r0, 0x38 ; key 8
+	jne	lab13
+;	R0 - адрес спрайта в памяти процессора
+;	R1 - адрес спрайта в видеопамяти
+;	R2 - ширина спрайта в пикселях
+;	R3 - высота спрайта в пикселях
+	load	r1, 0x80000000
+	jmp	loop
+timeout:
+	pop	r1
+	inc	r1, 4
+loop:
+	push	r1
+	load	r2, 64
+	load	r3, 64
+;	load	r0, 0
+	lea	r0, $dosfont4
+	call	put_sprite_640x480x32
 
+	load	r3, 0xfffeffe0	; Обновлене экрана пока не вынесено в функцию
+	mov	(r3), r0	; Обновить экран перед чтением клавиатуры
+
+	load	r0, 10 	; Ждать событие 1000 мс
+	call	_get_event	; Ввод символа с графического окна
+	or	r0, r0
+	je	timeout
+	pop	r1
+	jmp	exit
+	
+lab13:
+     	call	_print_hex
+	call	_newline
 exit:	pop	r15
 	return
 end
 
-$line1 	db	'1 - clear vga screen  ',13,10  ,0 
-$line2	db	'2 - CYRTHIN-Nesterenko-8x16   ',13,10,
-$line3	db	'3 - DK-Feoktistov-8x16',13,10
+$line1 	db	'1 - clear vga screen',13,10  ,0 
+$line2	db	'2 - CYRTHIN-Nesterenko-8x16',13,10,
+	db	'3 - DK-Feoktistov-8x16',13,10,
 	db	'4 - beta-Chi-Sovt-8x16',13,10
-	db	'5 - EDFN-Anry-VGA3-8x16   ',13,10
-	db	'6 - MYFONT-8x16   ',13,10
+	db	'5 - EDFN-Anry-VGA3-8x16',13,10,
+	db	'6 - MYFONT-8x16',13,10,
 	db	'7 - Goryachev-UNI_8X16',13,10,
-	db	'8 - scroll screen down',13,10,
+	db	'8 - scroll screen down',13,10
 	db	'9 - scroll screen up',13,10,
 	db	'0 - exit to prev menu',13,10,0
 
@@ -183,16 +215,17 @@ include		lib/asm/vga/draw_char.asm
 include		lib/asm/vga/draw_string.asm
 include		lib/asm/vga/get_event.asm
 include		lib/asm/vga/scroll.asm
+include		lib/asm/vga/sprite.asm
 
 include		lib/asm/tty/tty.asm
 include		lib/asm/emulate/div.asm
 
-$dosfont1		import		lib/asm/vga/fonts/CYRTHIN-Nesterenko-8x16.fnt
-$dosfont2		import		lib/asm/vga/fonts/DK-Feoktistov-8x16.fnt
-$dosfont3		import		lib/asm/vga/fonts/beta-Chi-Sovt-8x16.fnt
-$dosfont4		import		lib/asm/vga/fonts/EDFN-Anry-VGA3-8x16.FNT
-$dosfont5		import		lib/asm/vga/fonts/MYFONT-8x16.FNT
-$dosfont6		import		lib/asm/vga/fonts/Goryachev-UNI_8X16.fnt
+$dosfont1		import		lib/asm/vga/fonts/CYRTHIN-Nesterenko-8x16.fnt 
+$dosfont2		import		lib/asm/vga/fonts/DK-Feoktistov-8x16.fnt 
+$dosfont3		import		lib/asm/vga/fonts/beta-Chi-Sovt-8x16.fnt   
+$dosfont4		import		lib/asm/vga/fonts/EDFN-Anry-VGA3-8x16.FNT  
+$dosfont5		import		lib/asm/vga/fonts/MYFONT-8x16.FNT   
+$dosfont6		import		lib/asm/vga/fonts/Goryachev-UNI_8X16.fnt    
 
 function _test_chars
 	push	r15
@@ -205,8 +238,8 @@ loop:
 	mov 	r1, r13		; Начало строки
 next_pos:
 	mov	r0, r8
-	load	r2, 0xffffffff
-	load	r3, 0x00000000
+	load	r2, 0xff00ff00
+	load	r3, 0x552a552a
 	mov	r12, r1
 	call	_draw_char
 	dec	r11

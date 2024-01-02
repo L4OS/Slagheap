@@ -86,7 +86,7 @@ skip:
 	return
 end
 
-; --- Поля Task Control Block ------------------------------
+; --- Фрейм для сохранения регистров ---
 $reg_1		equ		0	; 
 $reg_3		equ		1	; 
 $reg_4		equ		2	; 
