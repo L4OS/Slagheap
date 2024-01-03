@@ -42,6 +42,10 @@ end
 ;	R2 - ширина спрайта в пикселях
 ;	R3 - высота спрайта в пикселях
 function get_sprite_640x480x32
+assign	r4	X
+assign	r5	NEXT_LINE_ADDER
+assign	r6	DOT
+assign	R7	WIDTH
 	load	NEXT_LINE_ADDER, 2560		; Количество точек на экране по ширне
 	mov	WIDTH, r2			; Сохранение ширмны спрайта
 	shl	WIDTH, 2			; Умножаем ширина на 4 бита на пиксель

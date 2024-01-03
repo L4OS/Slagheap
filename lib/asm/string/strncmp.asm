@@ -111,7 +111,7 @@ check_zero:
 	je	same_string
 	cmp	FIRST_MASK, SECOND_MASK
 	jne	diff_string
-	dec	COUNTTER
+	dec	COUNTER
 	dec	FOUR_COUNTER
 	jnz	do
 	jmp	look_carefully
@@ -125,9 +125,9 @@ end
 
 ; C-style функция
 ; Нужен мозговой штурм для C-ABI - первыпараметр в R0 или R1?
-function _strcmp
+function _strncmp
 	push	r15
-	call 	strcmp
+	call 	strncmp
 	load	r0, 1
 	jz	exit
 	load	r0, 0
