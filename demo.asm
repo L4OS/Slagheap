@@ -177,8 +177,9 @@ loop:
 	push	r1
 	load	r2, 64
 	load	r3, 64
-;	load	r0, 0
-	lea	r0, $dosfont4
+	load	r0, 0
+;debug
+	lea	r0, $dosfont2
 	call	put_sprite_640x480x32
 
 	load	r3, 0xfffeffe0	; Обновлене экрана пока не вынесено в функцию
