@@ -227,7 +227,7 @@ $dosfont3		import		lib/asm/vga/fonts/beta-Chi-Sovt-8x16.utf8.fnt
 $dosfont4		import		lib/asm/vga/fonts/EDFN-Anry-VGA3-8x16.utf8.FNT  
 ;$dosfont5		import		lib/asm/vga/fonts/MYFONT-8x16.utf8.FNT   
 $dosfont6		import		lib/asm/vga/fonts/Goryachev-UNI_8X16.utf8.fnt    
-$dosfont7		import		lib/asm/vga/fonts/MYFONT-8x16.utf8.FNT   
+$dosfont7		import		lib/asm/vga/fonts/MYFONT-8x16.utf8.fnt   
 
 function _test_chars
 	push	r15
