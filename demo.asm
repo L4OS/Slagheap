@@ -126,7 +126,7 @@ lab5:
 lab6:
 	cmp	r0, 0x36
 	jne	lab7
-	lea	r7, $dosfont5
+	lea	r7, $dosfont7
 	call	_select_font
 	call	_test_chars
 	jmp	exit
@@ -221,12 +221,13 @@ include		lib/asm/vga/sprite.asm
 include		lib/asm/tty/tty.asm
 include		lib/asm/emulate/div.asm
 
-$dosfont1		import		lib/asm/vga/fonts/CYRTHIN-Nesterenko-8x16.fnt 
-$dosfont2		import		lib/asm/vga/fonts/DK-Feoktistov-8x16.fnt 
-$dosfont3		import		lib/asm/vga/fonts/beta-Chi-Sovt-8x16.fnt   
-$dosfont4		import		lib/asm/vga/fonts/EDFN-Anry-VGA3-8x16.FNT  
-$dosfont5		import		lib/asm/vga/fonts/MYFONT-8x16.FNT   
-$dosfont6		import		lib/asm/vga/fonts/Goryachev-UNI_8X16.fnt    
+$dosfont1		import		lib/asm/vga/fonts/CYRTHIN-Nesterenko-8x16.utf8.fnt 
+$dosfont2		import		lib/asm/vga/fonts/DK-Feoktistov-8x16.utf8.fnt 
+$dosfont3		import		lib/asm/vga/fonts/beta-Chi-Sovt-8x16.utf8.fnt   
+$dosfont4		import		lib/asm/vga/fonts/EDFN-Anry-VGA3-8x16.utf8.FNT  
+;$dosfont5		import		lib/asm/vga/fonts/MYFONT-8x16.utf8.FNT   
+$dosfont6		import		lib/asm/vga/fonts/Goryachev-UNI_8X16.utf8.fnt    
+$dosfont7		import		lib/asm/vga/fonts//todo/KEYRUS-Gurtjak-8x16.utf8.fnt
 
 function _test_chars
 	push	r15

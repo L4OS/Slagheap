@@ -24,7 +24,7 @@ end
 
 function _draw_char
 	push	r15
-	push	r10			; Согласно ABI не храним содержимое R8-R15
+	push	r10			; Согласно ABI храним содержимое R8-R15
 	push	r1
 	load	r10, 2528 		; Размер следующая строка (640 - 8) * 4
 
