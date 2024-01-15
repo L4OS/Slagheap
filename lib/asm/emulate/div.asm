@@ -94,14 +94,14 @@ $reg_5		equ		3	;
 $reg_6		equ		4	; 
 $reg_7		equ		5	; 
 $reg_8		equ		6	; 
-$reg_15		equ		7	; 
+$reg_ret	equ		7	; 
 
 assign		r14	stack_pointer	; Указатель на вершину стека
 
 function _safe_div64
 	dec	stack_pointer, 16
 	dec	stack_pointer, 16
-	mov	stack_pointer.reg_15, r15
+	mov	stack_pointer.reg_ret, r15
 	mov	stack_pointer.reg_8, r8
 	mov	stack_pointer.reg_7, r7
 	mov	stack_pointer.reg_6, r6
@@ -115,7 +115,7 @@ function _safe_div64
 	mov	r6, stack_pointer.reg_6
 	mov	r7, stack_pointer.reg_7
 	mov	r8, stack_pointer.reg_8
-	mov	r15, stack_pointer.reg_15
+	mov	r15, stack_pointer.reg_ret
 	inc	stack_pointer, 16
 	inc	stack_pointer, 16
 	return
