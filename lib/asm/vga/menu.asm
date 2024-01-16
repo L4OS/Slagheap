@@ -32,7 +32,6 @@ $dosfont2		import		fonts/DK-Feoktistov-8x16.utf8.fnt
 
 include		draw_char.asm
 include		get_event.asm
-;include         ../tty/print_dec.asm
 
 ; --- Глобальное имя регистра ---
 assign		r4	video_ptr
@@ -166,7 +165,7 @@ check_enter:
 	mov	r0, stack_pointer.index
 	jmp	finish
 check_a:	
-	cmp	r0, 0x61  ; 'a'
+	cmp	r0, 0x1f ; Клавиша вниз
 	jne	n2
 	mov	r1, stack_pointer.background_color
 	call	fill_menu_item_background
@@ -181,7 +180,7 @@ down_ok:
 	call	fill_menu_item_background
 	jmp	again	
 n2:
-	cmp	r0, 0x71 ; 'q'	; 0x39 ; 'key 9'
+	cmp	r0, 0x1e ; Клавиша вверх
 	jne	show_key
 
 	load	r1, 0xffffffff
