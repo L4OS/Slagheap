@@ -32,6 +32,7 @@ $dosfont2		import		fonts/DK-Feoktistov-8x16.utf8.fnt
 
 include		draw_char.asm
 include		get_event.asm
+;include         ../tty/print_dec.asm
 
 ; --- Глобальное имя регистра ---
 assign		r4	video_ptr
