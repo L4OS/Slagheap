@@ -40,8 +40,8 @@ assign		r12	align_counter
 
 
 $reg_15			equ	15	; Адрес возврата 
-$reg_13			equ	13	; Адрес возврата 
-$reg_12			equ	12	; Адрес возврата 
+$reg_13			equ	13	; Временный регистр 
+$reg_12			equ	12	;  
 $reg_11			equ	11	;
 $utf_state		equ	10
 $menu_start		equ	9

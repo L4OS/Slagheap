@@ -14,6 +14,7 @@ $read_Wparam_port		equ		0xfffeffe8	;
 $read_Lparam_port		equ		0xfffeffec
 
 function _get_event
+	push	r6
 	load	r6, $window_event_timeout
 	mov	(r6), r0
 ;	load	r0, $vga_window_key_port ; Порт для чтения событий и записи таймаутов - общий
@@ -24,5 +25,7 @@ function _get_event
 	mov	r1, (r6)
 	inc	r6, 4 ; Переход на регистр Wparam
 	mov	r2, (r6)
-exit:	return
+exit:	
+	pop	r6
+	return
 end
