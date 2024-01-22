@@ -206,13 +206,8 @@ character_loop:
 foreground_dot:
 	mov	(r1), r2
 next_dot:
-disable
-	inc	r1, 4;	
-	inc	r1, 4 ; Ха-ха давай через точрку?
-else
 	clc
 	addc	r1, dot_step
-done
 	dec	helper
 	jnz	character_loop
 	jmp	item_loop
@@ -221,7 +216,7 @@ line_done:
 	load	r1, 0xfffeffe0	; Адрес порта управления терминалом
 	mov	(r1), r0	; Обновить экран записью в порт
 
-	load	r0, 50 	; Ждать событие 3 секунды
+	load	r0, 50 		; Ждать событие 50 миллисекунд
 	call	_get_event	; 
 	or	r0, r0
 	jne	logout          ; Если таймаут, снова ждать

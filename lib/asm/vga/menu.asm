@@ -15,7 +15,7 @@ function menu_test
 end
 
 enable
-$menu	db	'Первый \r\n'
+$menu	db	'О программе\r\n'
 	db	'Второй пункт\r\n'
 	db	'Третий пункт\r\n'
 	db	'Четвёртый пункт\r\n'
