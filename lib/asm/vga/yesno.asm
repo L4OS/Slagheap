@@ -375,9 +375,9 @@ check_enter:
 check_a:	
 	cmp	r0, 0x09 ; Клавиша Табуляция
 	je	swap_yesno
-	cmp	r0, 0x1e ; Клавиша вверх
+	cmp	r0, 0x1c ; Клавиша влево
 	je	swap_yesno
-	cmp	r0, 0x1f ; Клавиша вниз
+	cmp	r0, 0x1d ; Клавиша вправо
 	jne	n2
 swap_yesno:
 	mov	r0, local.select
