@@ -1,9 +1,20 @@
 function	init_vga
 	load	r14, 0x8000 ; set stack
-;debug
+debug
+	call	_vertical_scroll_demo
+
+	lea	r7, $dosfont2x
+	call	_select_font
+
+	lea	r0, $menu       ; R0 - текст меню
+	load	r1, 0x80004000  ; R1 - адрес видеопамяти
+	load	r2, 0x00000000	; R2 - цвет текста
+	load	r3, 0xffffffff	; R3 - цыет фона
+
+	call	_menu
+
 	call	_test_vga
 	send
-entry:
 end
 
 function	_test_vga
@@ -16,8 +27,6 @@ enter:
 	unlock
 
 	; Выбор шрифта по умолчанию
-	lea	r7, $dosfont1
-	call	_select_font
 
 help:
 	lea	r1, $line1	; Адрес строки приветсвия в R1
@@ -217,12 +226,14 @@ include		lib/asm/vga/draw_string.asm
 include		lib/asm/vga/get_event.asm
 include		lib/asm/vga/scroll.asm
 include		lib/asm/vga/sprite.asm
+include		lib/asm/vga/menu.asm
 
 include		lib/asm/tty/tty.asm
 include		lib/asm/emulate/div.asm
+include		demos/visual.asm
 
 $dosfont1		import		lib/asm/vga/fonts/CYRTHIN-Nesterenko-8x16.utf8.fnt 
-$dosfont2		import		lib/asm/vga/fonts/DK-Feoktistov-8x16.utf8.fnt 
+;$dosfont2		import		lib/asm/vga/fonts/DK-Feoktistov-8x16.utf8.fnt 
 $dosfont3		import		lib/asm/vga/fonts/beta-Chi-Sovt-8x16.utf8.fnt   
 $dosfont4		import		lib/asm/vga/fonts/EDFN-Anry-VGA3-8x16.utf8.FNT  
 ;$dosfont5		import		lib/asm/vga/fonts/MYFONT-8x16.utf8.FNT   

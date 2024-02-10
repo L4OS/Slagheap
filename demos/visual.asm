@@ -1,3 +1,9 @@
+function visual_test
+	load	r14, 0x8000 ; установка вершины стека
+	call	_vertical_scroll_demo
+	send
+end
+
 assign		r11	dot_step
 assign 		r12	text_ptr
 assign		r10	buffer_ptr
@@ -6,12 +12,11 @@ assign		r10	buffer_ptr
 ;$buffer_ptr	equ	0
 $text_ptr	equ	1
 
-function visual_test
-	load	r14, 0x8000 ; установка вершины стека
-
-	load	r0, 32
+function _vertical_scroll_demo
+	push	r15
+	load	r13, 32
 	clc
-	subc	r14, r0
+	subc	r14, r13
 ;	mov	this, r14
 
 	load	r0, 320	    ; Размер буфкера с индексами символов	
@@ -78,7 +83,15 @@ inside:
 	load	dot_step, 4
 	jmp	loop
 exit:
-	send
+;debug
+	load	r13, 32
+	clc
+	addc	r14, r13
+	load	r13, 320	    ; Размер буфкера с индексами символов	
+	clc
+	addc	r14, r13
+	pop	r15
+	return
 end
 
 
@@ -87,7 +100,7 @@ $hello		db	'Slagheap SoC emulator Demo', 0
 $message	db	' \n'
 		db	'Здравствуй, дорогой друг!\n \n'
 		db	'Я - демонстрационная программа для системы на кристалле "Террикон".\n'
-		db	'Я представляю собой виртуальный 32-х битный компьютер с 32 килобайтами\n'
+		db	'Я представляю собой виртуальный 32-х битный компьютер с 48 килобайтами\n'
 		db	'оперативной памяти, которая разделяется между программами, данными'
 		db	' и стеком.\n \n'
 		db	'На борту у меня так же присутствует алфавитно-цифровой терминал. Доступ\n'

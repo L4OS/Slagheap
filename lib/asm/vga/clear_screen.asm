@@ -8,11 +8,11 @@ function	lib_entry_test
 entry:
 end
 
-assign	R3	video_ptr
-assign	R4	counter
-assign  R8	eax
 
 function	_clear_vga_screen
+  assign	R3	video_ptr
+  assign	R4	counter
+  assign  	R8	eax
 	load	video_ptr, 0x80000000
 	load	counter, 307200 ; 640x480
 	load	eax, 0x555a555a
@@ -28,6 +28,8 @@ end
 
 
 function	_refresh_screen
+  assign	R3	video_ptr
+  assign  	R8	eax
 	load	video_ptr, 0xfffeffe0	; Порт обновления экрана
 	mov	(video_ptr), eax
 end

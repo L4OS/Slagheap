@@ -2,7 +2,7 @@ function menu_test
 	load	r14, 0x8000 ; установка вершины стека
 
 	; Выбор шрифта по умолчанию
-	lea	r7, $dosfont2
+	lea	r7, $dosfont2x
 	call	_select_font
 
 	lea	r0, $menu       ; R0 - текст меню
@@ -28,7 +28,7 @@ $menu	db	'Test\r\nAgain\r\nThird test\nABC\n'
 ;$menu	db	'Ёлки\r\nWhat?\r\nЧто стряслось'0
 done
 
-$dosfont2		import		fonts/DK-Feoktistov-8x16.utf8.fnt 
+$dosfont2x		import		fonts/DK-Feoktistov-8x16.utf8.fnt 
 
 include		draw_char.asm
 include		get_event.asm
