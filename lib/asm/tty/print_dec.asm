@@ -3,7 +3,18 @@
 ; Вход:  R0  - число
 
 function 	_print_dec
-	push	r15
+    $ret_addr		equ		3
+    $keep_r11		equ		2
+    $keep_r12		equ		1
+    $keep_reserv	equ		0
+
+;	push	r15
+	dec	r14, 8
+	dec	r14, 8
+	mov	r14.ret_addr, r15
+	mov	r14.keep_r12, r12
+	mov	r14.keep_r11, r11
+
 	xor	r11, r11
 	load    r2,  80   ; 10 bytes buffer
 	clc
@@ -38,7 +49,13 @@ pool:
 	clc
 	addc	r14, r2
 
-	pop	r15
+	mov	r15, r14.ret_addr
+	mov	r12, r14.keep_r12
+	mov	r11, r14.keep_r11
+	inc	r14, 8
+	inc	r14, 8
+
+;	pop	r15
 	return
 end
 
