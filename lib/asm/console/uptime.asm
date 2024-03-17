@@ -4,20 +4,26 @@
 ; --- Точка входа при отладке. Она должна быть первой в файле
 ; Не должна вызываться программой и служит как тестовый заголовок
 function test_uptime
-		load	r14, 0x2000 ; set stack
-		notch
-		jmp	entry
-entry:
+		load	r14, 0x8000 ; set stack
+		call    uptime_demo
+		xor     r0, r0
+		send
+end
+
+function        uptime_demo
+                push    r15
 		call	_show_uptime  	
 		lea	r1, $uptime_string
 		call	_puts
 		call	_newline
-		send
+		pop     r15
+		return
 end
 
 ; Переделать на $lib_string@uptime
 
-$uptime_string	db	'TEST UPT',0
+$uptime_string	db	'TEST UPT: due to difference of CPU clocks of host and emulator', 13, 10
+                db      '          this test will show wrong values. Will be fixed some day...',13, 10
 
 
 ; --- Поля Function Control Block ------------------------------
