@@ -1,6 +1,6 @@
 ; --- Точка входа при отладке. Она должна быть первой в файле
 ; Не должна вызываться программой и служит как тестовый заголовок
-function _test_char
+function test_char
 	load	r14, 0x2000 ; set stack
 	load	r0, 32
 	load	r1, 0x80000000
@@ -10,6 +10,7 @@ function _test_char
 	send
 end
 
+$font_selector	equ	0xfffeffd0
 
 ; --- Функция вывода символа на VGA экран по координатам и нужным цветом
 ; Вход:  R0  - код символа
@@ -28,7 +29,7 @@ function _draw_char
 	push	r1
 	load	r10, 2528 		; Размер следующая строка (640 - 8) * 4
 
-	lea	r7, $font_selector
+	load	r7, $font_selector	; Читает из регистра адрес текушего шрифта в памяти
 	mov	r7, (r7)
 	shl	r0, 4
 	clc	
@@ -65,14 +66,16 @@ next:
 	return
 end
 
-$font_selector	dq	0
+;$font_selector	dq	0
+
 
 ; Устанавливает указатель на начало шрифта 8x16
 ; Вход:
 ;	R7 - адрес памяти шрифта
 
 function _select_font
-	lea	r6, $font_selector
+;	lea	r6, $font_selector
+	load	r6, $font_selector
 	mov	(r6), r7
 	return
 end

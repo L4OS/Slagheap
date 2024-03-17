@@ -1,6 +1,7 @@
 function visual_test
 	load	r14, 0x8000 ; установка вершины стека
 	call	_vertical_scroll_demo
+	xor	r0, r0
 	send
 end
 
