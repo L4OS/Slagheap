@@ -232,13 +232,13 @@ include		lib/asm/tty/tty.asm
 include		lib/asm/emulate/div.asm
 include		demos/visual.asm
 
-;$dosfont1		import		lib/asm/vga/fonts/CYRTHIN-Nesterenko-8x16.utf8.fnt 
+$dosfont1		import		lib/asm/vga/fonts/CYRTHIN-Nesterenko-8x16.utf8.fnt 
 ;$dosfont2		import		lib/asm/vga/fonts/DK-Feoktistov-8x16.utf8.fnt 
-;$dosfont3		import		lib/asm/vga/fonts/beta-Chi-Sovt-8x16.utf8.fnt   
-;$dosfont4		import		lib/asm/vga/fonts/EDFN-Anry-VGA3-8x16.utf8.FNT  
+$dosfont3		import		lib/asm/vga/fonts/beta-Chi-Sovt-8x16.utf8.fnt   
+$dosfont4		import		lib/asm/vga/fonts/EDFN-Anry-VGA3-8x16.utf8.FNT  
 ;$dosfont5		import		lib/asm/vga/fonts/MYFONT-8x16.utf8.FNT   
-;$dosfont6		import		lib/asm/vga/fonts/Goryachev-UNI_8X16.utf8.fnt    
-;$dosfont7		import		lib/asm/vga/fonts/MYFONT-8x16.utf8.fnt   
+$dosfont6		import		lib/asm/vga/fonts/Goryachev-UNI_8X16.utf8.fnt    
+$dosfont7		import		lib/asm/vga/fonts/MYFONT-8x16.utf8.fnt   
 
 function _test_chars
 	push	r15
